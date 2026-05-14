@@ -151,5 +151,41 @@
     "unauthorized": "No tienes permiso para hacer eso.",
     "notFound": "No encontrado.",
     "networkError": "Error de red. Verifica tu conexión."
+  },
+  "mobile": {
+    "nav": {
+      "home": "Inicio",
+      "report": "Reportar",
+      "myIncidents": "Mis reportes"
+    },
+    "home": {
+      "greeting": "Hola",
+      "activeIncidents": "Incidentes activos",
+      "myOpen": "Mis reportes abiertos",
+      "recentActivity": "Actividad reciente",
+      "allClear": "Sin incidentes activos en este momento",
+      "quickReport": "Reportar un incidente"
+    },
+    "report": {
+      "title": "Reportar incidente",
+      "stepOf": "Paso {current} de {total}",
+      "whatHappened": "¿Qué ocurrió?",
+      "howSevere": "¿Qué tan grave es?",
+      "addPhoto": "Agregar foto",
+      "addPhotoHint": "Toca para tomar una foto o subir de la galería",
+      "addNotes": "Notas adicionales",
+      "notesPlaceholder": "Cualquier detalle que pueda ayudar...",
+      "submit": "Enviar reporte",
+      "submitting": "Enviando...",
+      "success": "Incidente reportado",
+      "successDesc": "Tu reporte ha sido enviado.",
+      "reportAnother": "Reportar otro",
+      "viewReport": "Ver reporte"
+    },
+    "myIncidents": {
+      "title": "Mis Reportes",
+      "empty": "Aún no has reportado ningún incidente",
+      "emptyDesc": "Toca el botón + para reportar tu primer incidente."
+    }
   }
 }

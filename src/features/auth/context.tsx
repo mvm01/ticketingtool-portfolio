@@ -2,7 +2,13 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 import type { AuthUser } from '@/types'
-import { mockProfile, mockOrg, mockMembership } from '@/lib/mock/data'
+import {
+  mockProfile,
+  mockMemberProfile,
+  mockOrg,
+  mockMembership,
+  mockMemberMembership,
+} from '@/lib/mock/data'
 
 interface AuthContextValue {
   user: AuthUser | null
@@ -10,11 +16,18 @@ interface AuthContextValue {
   signIn: (email: string, password: string) => Promise<void>
   signUp: (email: string, password: string, fullName: string) => Promise<void>
   signOut: () => Promise<void>
+  getHomeRoute: (locale: string) => string
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
 const STORAGE_KEY = 'restaurantops_auth'
+
+// Determines the correct home route based on role
+function homeRouteForRole(role: string | undefined, locale: string): string {
+  if (role === 'owner' || role === 'admin') return `/${locale}/dashboard`
+  return `/${locale}/m/home`
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
@@ -30,11 +43,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signIn(email: string, _password: string) {
     await new Promise((r) => setTimeout(r, 800))
+
+    // Mock: staff email gets member role, everything else gets owner
+    const isMember = email.includes('staff') || email.includes('member')
+    const profile = isMember ? { ...mockMemberProfile, email } : { ...mockProfile, email }
+    const membership = isMember ? mockMemberMembership : mockMembership
+
     const authUser: AuthUser = {
-      id: mockProfile.id,
+      id: profile.id,
       email,
-      profile: { ...mockProfile, email },
-      membership: mockMembership,
+      profile,
+      membership,
       organization: mockOrg,
     }
     setUser(authUser)
@@ -60,8 +79,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(STORAGE_KEY)
   }
 
+  function getHomeRoute(locale: string): string {
+    return homeRouteForRole(user?.membership?.role, locale)
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, isLoading, signIn, signUp, signOut, getHomeRoute }}>
       {children}
     </AuthContext.Provider>
   )

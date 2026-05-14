@@ -151,5 +151,41 @@
     "unauthorized": "You don't have permission to do that.",
     "notFound": "Not found.",
     "networkError": "Network error. Check your connection."
+  },
+  "mobile": {
+    "nav": {
+      "home": "Home",
+      "report": "Report",
+      "myIncidents": "My Reports"
+    },
+    "home": {
+      "greeting": "Hey",
+      "activeIncidents": "Active incidents",
+      "myOpen": "My open reports",
+      "recentActivity": "Recent activity",
+      "allClear": "No active incidents right now",
+      "quickReport": "Report an incident"
+    },
+    "report": {
+      "title": "Report incident",
+      "stepOf": "Step {current} of {total}",
+      "whatHappened": "What happened?",
+      "howSevere": "How severe is it?",
+      "addPhoto": "Add a photo",
+      "addPhotoHint": "Tap to take a photo or upload from gallery",
+      "addNotes": "Additional notes",
+      "notesPlaceholder": "Any extra details that might help...",
+      "submit": "Submit report",
+      "submitting": "Submitting...",
+      "success": "Incident reported",
+      "successDesc": "Your report has been submitted.",
+      "reportAnother": "Report another",
+      "viewReport": "View report"
+    },
+    "myIncidents": {
+      "title": "My Reports",
+      "empty": "You haven't reported any incidents yet",
+      "emptyDesc": "Tap the + button to report your first incident."
+    }
   }
 }

@@ -1,0 +1,401 @@
+{
+  "project": "RestaurantOps",
+  "version": "portfolio-v1",
+  "session": "refactor-handoff",
+  "date": "2026-05-14",
+  "description": "Full handoff document for the production refactor session. Portfolio build is complete and compiling cleanly. Next session goal: replace all mock data with real Supabase, add RLS, wire storage for photos, and prep for Vercel deploy.",
+
+  "repo": {
+    "portfolio_path": "C:\\Users\\subsu\\documents\\ticketingtool-portfolio",
+    "package_manager": "npm",
+    "framework": "Next.js 16.2.6 (App Router, Turbopack)",
+    "run_dev": "npm run dev",
+    "run_build": "npm run build",
+    "run_typecheck": "npx tsc --noEmit"
+  },
+
+  "coding_rules": {
+    "philosophy": "KISS — no unnecessary abstractions, build specifically for RestaurantOps",
+    "css_methodology": "BEM — all custom classes follow Block__Element--Modifier naming",
+    "language": "TypeScript strict mode",
+    "no_hardcoded_strings": true,
+    "i18n": "next-intl — all UI text must come from locales/en/common.json or locales/es/common.json"
+  },
+
+  "tech_stack": {
+    "frontend": ["Next.js 16 App Router", "TypeScript", "Tailwind CSS v4", "shadcn/ui (@base-ui/react)", "Framer Motion", "React Hook Form", "Zod"],
+    "backend_target": "Supabase (PostgreSQL + Auth + Storage + RLS)",
+    "orm": "Drizzle ORM (drizzle-orm + drizzle-kit)",
+    "deployment": "Vercel",
+    "pwa": true
+  },
+
+  "installed_packages": {
+    "key_dependencies": {
+      "next": "16.2.6",
+      "react": "19.2.4",
+      "next-intl": "^4.12.0",
+      "framer-motion": "^12.38.0",
+      "drizzle-orm": "^0.45.2",
+      "@neondatabase/serverless": "^1.1.0",
+      "react-hook-form": "^7.75.0",
+      "@hookform/resolvers": "^5.2.2",
+      "zod": "^4.4.3",
+      "sonner": "^2.0.7",
+      "lucide-react": "^1.14.0",
+      "@base-ui/react": "^1.4.1",
+      "shadcn": "^4.7.0"
+    },
+    "key_devDependencies": {
+      "drizzle-kit": "^0.31.10",
+      "tailwindcss": "^4",
+      "typescript": "^5"
+    },
+    "important_note": "shadcn is installed with @base-ui/react (NOT @radix-ui). There is NO asChild prop on Button or DropdownMenuTrigger. Use className directly on the trigger elements."
+  },
+
+  "theme": {
+    "palette": "Dark blue + silver — always dark, no light mode",
+    "css_variables": {
+      "--brand-900": "#0a0e1a (app background)",
+      "--brand-800": "#0d1220 (card/sidebar background)",
+      "--brand-700": "#111829 (hover states)",
+      "--brand-600": "#1a2340 (active nav, accent)",
+      "--brand-500": "#1e3a8a",
+      "--brand-400": "#2563eb (primary CTA color)",
+      "--brand-300": "#3b82f6 (links, icons)",
+      "--silver-100": "#f1f5f9 (primary text)",
+      "--silver-200": "#e2e8f0",
+      "--silver-300": "#cbd5e1 (secondary text)",
+      "--silver-400": "#94a3b8 (muted text)",
+      "--silver-500": "#64748b (placeholder/labels)",
+      "--border": "rgb(255 255 255 / 8%)"
+    }
+  },
+
+  "i18n": {
+    "library": "next-intl ^4.12.0",
+    "config_file": "src/lib/i18n/config.ts",
+    "request_file": "src/i18n/request.ts",
+    "proxy_file": "src/proxy.ts (replaces deprecated middleware.ts)",
+    "locales": ["es", "en"],
+    "default_locale": "es",
+    "locale_prefix": "always",
+    "translation_files": [
+      "locales/en/common.json",
+      "locales/es/common.json"
+    ],
+    "translation_keys": [
+      "app", "nav", "auth", "dashboard", "incidents",
+      "incidents.severity", "incidents.status", "incidents.category",
+      "team", "org", "common", "validation", "toast", "errors",
+      "mobile.nav", "mobile.home", "mobile.report", "mobile.myIncidents"
+    ]
+  },
+
+  "routing": {
+    "structure": "Next.js App Router with [locale] dynamic segment",
+    "route_groups": {
+      "(app)": "Admin/owner layout — AppShell with sidebar + topbar. Protected by RouteGuard allow='admin'",
+      "(mobile)": "Member layout — MobileShell with bottom tabs. Protected by RouteGuard allow='member'"
+    },
+    "routes": {
+      "/": "Redirects to /es/dashboard",
+      "/[locale]": "Redirects to /[locale]/dashboard",
+      "/[locale]/auth/sign-in": "Sign in page (public)",
+      "/[locale]/auth/sign-up": "Sign up page (public)",
+      "/[locale]/dashboard": "Admin dashboard (admin/owner only)",
+      "/[locale]/incidents": "Incidents list with filter tabs (admin/owner only)",
+      "/[locale]/incidents/new": "New incident form (admin/owner only)",
+      "/[locale]/incidents/[id]": "Incident detail + resolve/archive (admin/owner only)",
+      "/[locale]/team": "Team members list (admin/owner only)",
+      "/[locale]/settings": "Settings page (admin/owner only)",
+      "/[locale]/m/home": "Mobile home — stats + recent activity (member only)",
+      "/[locale]/m/report": "3-step incident report form with photo upload (member only)",
+      "/[locale]/m/my-incidents": "Staff's own reported incidents (member only)",
+      "/[locale]/m/my-incidents/[id]": "Incident detail for staff (member only)"
+    },
+    "role_routing": {
+      "owner_admin": "Lands on /[locale]/dashboard after sign-in",
+      "member": "Lands on /[locale]/m/home after sign-in",
+      "mock_rule": "Email containing 'staff' or 'member' gets member role. All others get owner role."
+    }
+  },
+
+  "auth": {
+    "current_state": "MOCK — localStorage-based, no real auth",
+    "context_file": "src/features/auth/context.tsx",
+    "mock_users": {
+      "admin": { "email": "admin@restaurantops.dev", "role": "owner", "name": "Alex Rivera" },
+      "member": { "email": "staff@restaurantops.dev", "role": "member", "name": "María López" }
+    },
+    "refactor_target": "Replace with Supabase Auth (email/password). Use Supabase SSR cookies via @supabase/ssr package.",
+    "refactor_notes": [
+      "Install: @supabase/supabase-js @supabase/ssr",
+      "Create src/lib/supabase/client.ts (browser client)",
+      "Create src/lib/supabase/server.ts (server client using cookies())",
+      "Replace localStorage session with Supabase session cookies",
+      "AuthProvider should call supabase.auth.getSession() + onAuthStateChange()",
+      "signIn → supabase.auth.signInWithPassword()",
+      "signUp → supabase.auth.signUp() then insert into profiles table",
+      "signOut → supabase.auth.signOut()",
+      "getHomeRoute() logic stays the same — reads role from membership table"
+    ]
+  },
+
+  "database": {
+    "current_state": "MOCK — in-memory React state (src/lib/mock/data.ts + src/features/incidents/context.tsx)",
+    "schema_file": "src/db/schema/index.ts",
+    "drizzle_config": "drizzle.config.ts",
+    "db_entry": "src/db/index.ts (uses @neondatabase/serverless — swap URL for Supabase connection string)",
+    "tables": {
+      "profiles": {
+        "columns": ["id (uuid, PK)", "email (text, unique)", "full_name (text)", "avatar_url (text)", "created_at", "updated_at"],
+        "rls_note": "Users can only read/update their own profile"
+      },
+      "organizations": {
+        "columns": ["id (uuid, PK, default random)", "name (text)", "slug (text, unique)", "created_at", "updated_at"],
+        "rls_note": "Members can read their own org. Only owner can update."
+      },
+      "memberships": {
+        "columns": ["id (uuid, PK)", "user_id (FK→profiles)", "org_id (FK→organizations)", "role (enum: owner|admin|member)", "created_at"],
+        "rls_note": "Users can read their own membership. Admins can read all in their org."
+      },
+      "incidents": {
+        "columns": ["id", "org_id (FK)", "reporter_id (FK)", "assigned_to (FK nullable)", "title", "description", "category (enum)", "severity (enum)", "status (enum)", "photo_url", "created_at", "updated_at", "resolved_at", "archived_at"],
+        "enums": {
+          "category": ["equipment", "safety", "hygiene", "service", "supply", "facility", "other"],
+          "severity": ["low", "medium", "high", "critical"],
+          "status": ["open", "in_progress", "resolved", "archived"]
+        },
+        "rls_note": "Members can insert and read incidents in their org. Only admin/owner can update status."
+      },
+      "security_events": {
+        "columns": ["id", "user_id (FK nullable)", "org_id (FK nullable)", "event_type (text)", "ip_address", "user_agent", "metadata (jsonb)", "severity (enum)", "created_at"],
+        "rls_note": "Insert only. Only admins can read."
+      }
+    },
+    "refactor_target": "Replace Neon driver with Supabase Postgres. Use DATABASE_URL from Supabase project settings → Connection → Transaction pooler URI.",
+    "refactor_notes": [
+      "Update .env.local: DATABASE_URL=postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres?pgmode=transaction",
+      "Keep drizzle-orm. Remove @neondatabase/serverless, replace with postgres (node-postgres) driver",
+      "Run: npx drizzle-kit push to apply schema to Supabase",
+      "Enable RLS on all tables in Supabase dashboard",
+      "Write RLS policies (see rls_policies section below)",
+      "Replace mock context with server actions or API routes that use the Drizzle db client"
+    ]
+  },
+
+  "rls_policies": {
+    "note": "These need to be created in Supabase SQL editor after schema push",
+    "profiles": [
+      "SELECT: auth.uid() = id",
+      "UPDATE: auth.uid() = id"
+    ],
+    "organizations": [
+      "SELECT: EXISTS (SELECT 1 FROM memberships WHERE user_id = auth.uid() AND org_id = organizations.id)"
+    ],
+    "memberships": [
+      "SELECT: user_id = auth.uid() OR EXISTS (SELECT 1 FROM memberships m WHERE m.user_id = auth.uid() AND m.org_id = memberships.org_id AND m.role IN ('owner','admin'))"
+    ],
+    "incidents": [
+      "SELECT: EXISTS (SELECT 1 FROM memberships WHERE user_id = auth.uid() AND org_id = incidents.org_id)",
+      "INSERT: EXISTS (SELECT 1 FROM memberships WHERE user_id = auth.uid() AND org_id = incidents.org_id)",
+      "UPDATE: EXISTS (SELECT 1 FROM memberships WHERE user_id = auth.uid() AND org_id = incidents.org_id AND role IN ('owner','admin'))"
+    ],
+    "security_events": [
+      "INSERT: true (authenticated users can log events)",
+      "SELECT: EXISTS (SELECT 1 FROM memberships WHERE user_id = auth.uid() AND org_id = security_events.org_id AND role IN ('owner','admin'))"
+    ]
+  },
+
+  "storage": {
+    "current_state": "MOCK — photo upload stores base64 data URL in memory (never persisted)",
+    "refactor_target": "Supabase Storage bucket named 'incident-photos'",
+    "refactor_notes": [
+      "Create bucket 'incident-photos' in Supabase dashboard (private bucket)",
+      "Upload path pattern: {org_id}/{incident_id}/{filename}",
+      "On submit in mobile report page: call supabase.storage.from('incident-photos').upload(path, file)",
+      "Get public URL: supabase.storage.from('incident-photos').getPublicUrl(path)",
+      "Store the returned URL as photo_url in the incident record",
+      "RLS on storage: users can upload to their own org folder, admins can read all"
+    ]
+  },
+
+  "permissions": {
+    "file": "src/lib/auth/permissions.ts",
+    "helpers": {
+      "canEditIncident(role, userId, incident)": "owner/admin always, member only if reporter",
+      "canResolveIncident(role)": "owner/admin only",
+      "canManageTeam(role)": "owner/admin only",
+      "canDeleteIncident(role)": "owner only",
+      "canArchiveIncident(role)": "owner/admin only"
+    },
+    "note": "These are client-side guards for UX only. Real enforcement is via RLS policies on the DB."
+  },
+
+  "components": {
+    "layout_admin": {
+      "AppShell": "src/components/layout/app-shell.tsx — flex wrapper with desktop sidebar + mobile Sheet drawer",
+      "Sidebar": "src/components/layout/sidebar.tsx — brand logo, org name, nav links with active state",
+      "Topbar": "src/components/layout/topbar.tsx — locale switcher + user avatar dropdown with sign out"
+    },
+    "layout_mobile": {
+      "MobileShell": "src/components/mobile/mobile-shell.tsx — header + scrollable content + fixed bottom tabs",
+      "MobileHeader": "src/components/mobile/mobile-header.tsx — org name + locale + avatar dropdown",
+      "BottomTabs": "src/components/mobile/bottom-tabs.tsx — Home / Report (FAB) / My Reports tabs"
+    },
+    "shared": {
+      "RouteGuard": "src/components/shared/route-guard.tsx — role-based protection, shows AdminSkeleton or MobileSkeleton while loading",
+      "AdminSkeleton": "src/components/shared/admin-skeleton.tsx — full shimmer layout for admin",
+      "MobileSkeleton": "src/components/shared/mobile-skeleton.tsx — full shimmer layout for mobile",
+      "PageTransition": "src/components/shared/page-transition.tsx — fade+slide-up on page entry",
+      "AnimatedList": "src/components/shared/animated-list.tsx — stagger wrapper",
+      "AnimatedItem": "src/components/shared/animated-list.tsx — individual staggered item",
+      "IncidentCard": "src/components/shared/incident-card.tsx — card with severity/status badges + link to detail",
+      "SeverityBadge": "src/components/shared/severity-badge.tsx — colored pill badge",
+      "StatusBadge": "src/components/shared/status-badge.tsx — colored pill badge"
+    }
+  },
+
+  "animations": {
+    "library": "framer-motion ^12",
+    "variants_file": "src/lib/motion/variants.ts",
+    "variants": {
+      "pageVariants": "fade + slide-up for page entry/exit",
+      "listVariants": "stagger container",
+      "itemVariants": "fade + slide-up for individual cards",
+      "statVariants": "fade + scale-up for stat cards",
+      "slideRightVariants": "slide left/right for mobile step transitions (defined but inline in report page)"
+    },
+    "applied_to": ["dashboard stats", "incident cards (admin + mobile)", "incidents list filter change", "mobile report step transitions", "success screen scale-up"]
+  },
+
+  "mock_layer": {
+    "data_file": "src/lib/mock/data.ts",
+    "auth_context": "src/features/auth/context.tsx",
+    "incidents_context": "src/features/incidents/context.tsx",
+    "removal_plan": "Delete src/lib/mock/data.ts. Replace auth context with Supabase auth. Replace incidents context with server actions (src/actions/incidents.ts). All pages that call useIncidents() will need to switch to fetching from the server action or a React Query hook."
+  },
+
+  "env_variables": {
+    "current_file": ".env.local",
+    "current_values": {
+      "DATABASE_URL": "postgresql://mock:mock@localhost:5432/restaurantops (placeholder)",
+      "NEXT_PUBLIC_SUPABASE_URL": "https://placeholder.supabase.co (placeholder)",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY": "placeholder"
+    },
+    "production_values_needed": [
+      "DATABASE_URL — from Supabase project: Settings → Database → Connection string (Transaction pooler)",
+      "NEXT_PUBLIC_SUPABASE_URL — from Supabase project: Settings → API → Project URL",
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY — from Supabase project: Settings → API → anon public key",
+      "SUPABASE_SERVICE_ROLE_KEY — for server-side admin operations (keep secret, never NEXT_PUBLIC_)"
+    ]
+  },
+
+  "refactor_checklist": {
+    "order": "Follow this order to avoid breaking the app at each step",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Create Supabase project",
+        "tasks": [
+          "Create new project at supabase.com",
+          "Copy Project URL, anon key, service role key",
+          "Copy Transaction pooler connection string for DATABASE_URL",
+          "Update .env.local with real values"
+        ]
+      },
+      {
+        "step": 2,
+        "title": "Push database schema",
+        "tasks": [
+          "Remove @neondatabase/serverless: npm uninstall @neondatabase/serverless",
+          "Install postgres driver: npm install postgres",
+          "Update src/db/index.ts to use postgres() instead of neon()",
+          "Run: npx drizzle-kit push",
+          "Verify all tables exist in Supabase Table Editor"
+        ]
+      },
+      {
+        "step": 3,
+        "title": "Enable RLS",
+        "tasks": [
+          "In Supabase dashboard, enable RLS on: profiles, organizations, memberships, incidents, security_events",
+          "Apply the RLS policies from the rls_policies section of this document using SQL editor"
+        ]
+      },
+      {
+        "step": 4,
+        "title": "Wire Supabase Auth",
+        "tasks": [
+          "npm install @supabase/supabase-js @supabase/ssr",
+          "Create src/lib/supabase/client.ts (createBrowserClient)",
+          "Create src/lib/supabase/server.ts (createServerClient with cookies())",
+          "Rewrite src/features/auth/context.tsx to use supabase.auth.*",
+          "Add trigger in Supabase: on auth.users insert → insert into public.profiles",
+          "Test sign-up creates profile row, sign-in returns session"
+        ]
+      },
+      {
+        "step": 5,
+        "title": "Replace incidents mock with server actions",
+        "tasks": [
+          "Create src/actions/incidents.ts with: getIncidents(), createIncident(), updateIncident(), setIncidentStatus()",
+          "Each action uses the Drizzle db client + checks auth session server-side",
+          "Replace useIncidents() context calls in pages with direct server action calls or a client hook wrapping them",
+          "Delete src/lib/mock/data.ts and src/features/incidents/context.tsx once all pages are migrated"
+        ]
+      },
+      {
+        "step": 6,
+        "title": "Wire Supabase Storage for photos",
+        "tasks": [
+          "Create bucket 'incident-photos' in Supabase Storage (private)",
+          "Set storage RLS: authenticated users can upload to their org folder",
+          "Update mobile report page: replace base64 preview storage with supabase.storage.from('incident-photos').upload()",
+          "Store returned public URL in incident.photo_url"
+        ]
+      },
+      {
+        "step": 7,
+        "title": "Organization onboarding flow",
+        "tasks": [
+          "After sign-up, if user has no membership → redirect to /[locale]/onboarding",
+          "Create onboarding page: enter org name → creates organization row + membership row with role='owner'",
+          "Update RouteGuard to handle 'no org' state (redirect to onboarding instead of dashboard)"
+        ]
+      },
+      {
+        "step": 8,
+        "title": "Seed real data + final QA",
+        "tasks": [
+          "Insert test org, test users, test incidents via Supabase dashboard",
+          "Test both instances end-to-end (admin flow + mobile flow)",
+          "Verify RLS blocks cross-org data access",
+          "Run npm run build — must be clean"
+        ]
+      },
+      {
+        "step": 9,
+        "title": "Vercel deploy",
+        "tasks": [
+          "Push repo to GitHub (private)",
+          "Connect to Vercel",
+          "Add all env variables in Vercel project settings",
+          "Deploy and smoke test production URL"
+        ]
+      }
+    ]
+  },
+
+  "known_issues_and_notes": [
+    "src/lib/utils/index.ts is an orphan — the real utils file is src/lib/utils.ts. The index.ts can be deleted.",
+    "shadcn uses @base-ui/react NOT @radix-ui — no asChild prop anywhere. Use className on trigger elements directly.",
+    "next-intl v4 uses requestLocale (not locale) in getRequestConfig. Already correctly implemented.",
+    "drizzle.config.ts uses dialect: 'postgresql' (not driver: 'pg') for drizzle-kit v0.31+. Already correct.",
+    "The proxy.ts file replaces the deprecated middleware.ts for next-intl routing.",
+    "Route group (app) and (mobile) both wrap with RouteGuard — this is the only auth enforcement on the client. Server-side enforcement will come from RLS + server actions in the refactor.",
+    "framer-motion v12 requires 'use client' on all components that use motion.* — all animation components already have this."
+  ]
+}

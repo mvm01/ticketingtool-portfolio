@@ -9,6 +9,15 @@ export const mockProfile: Profile = {
   updatedAt: new Date().toISOString(),
 }
 
+export const mockMemberProfile: Profile = {
+  id: 'user-2',
+  email: 'staff@restaurantops.dev',
+  fullName: 'María López',
+  avatarUrl: null,
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+}
+
 export const mockOrg: Organization = {
   id: 'org-1',
   name: 'Taco House Downtown',
@@ -22,6 +31,14 @@ export const mockMembership: Membership = {
   userId: 'user-1',
   orgId: 'org-1',
   role: 'owner',
+  createdAt: new Date().toISOString(),
+}
+
+export const mockMemberMembership: Membership = {
+  id: 'mem-2',
+  userId: 'user-2',
+  orgId: 'org-1',
+  role: 'member',
   createdAt: new Date().toISOString(),
 }
 
@@ -64,7 +81,7 @@ export const mockIncidents: Incident[] = [
   {
     id: 'inc-3',
     orgId: 'org-1',
-    reporterId: 'user-1',
+    reporterId: 'user-2',
     assignedTo: null,
     title: 'Ice machine producing insufficient ice',
     description: 'Bar ice machine output is very low. Rush hour starting in 2 hours.',
@@ -76,7 +93,7 @@ export const mockIncidents: Incident[] = [
     updatedAt: new Date(Date.now() - 1000 * 60 * 90).toISOString(),
     resolvedAt: null,
     archivedAt: null,
-    reporter: mockProfile,
+    reporter: mockMemberProfile,
   },
   {
     id: 'inc-4',
@@ -99,7 +116,7 @@ export const mockIncidents: Incident[] = [
   {
     id: 'inc-5',
     orgId: 'org-1',
-    reporterId: 'user-1',
+    reporterId: 'user-2',
     assignedTo: null,
     title: 'POS system freezing during orders',
     description: 'Front-of-house POS terminal 2 keeps freezing mid-transaction.',
@@ -111,6 +128,6 @@ export const mockIncidents: Incident[] = [
     updatedAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
     resolvedAt: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
     archivedAt: null,
-    reporter: mockProfile,
+    reporter: mockMemberProfile,
   },
 ]
