@@ -1,0 +1,155 @@
+{
+  "app": {
+    "name": "RestaurantOps",
+    "tagline": "Operational incident management for restaurants"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "incidents": "Incidents",
+    "team": "Team",
+    "settings": "Settings",
+    "signOut": "Sign out"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "email": "Email",
+    "password": "Password",
+    "fullName": "Full name",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signingIn": "Signing in...",
+    "signingUp": "Signing up...",
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create your account",
+    "emailPlaceholder": "you@restaurant.com",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "Your name"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "greeting": "Good morning",
+    "criticalIncidents": "Critical incidents",
+    "recentIncidents": "Recent incidents",
+    "resolutionQueue": "Resolution queue",
+    "openIncidents": "Open",
+    "inProgress": "In progress",
+    "resolved": "Resolved",
+    "totalToday": "Total today",
+    "noIncidents": "No incidents to show",
+    "allClear": "All clear — no active incidents"
+  },
+  "incidents": {
+    "title": "Incidents",
+    "new": "New incident",
+    "report": "Report incident",
+    "edit": "Edit incident",
+    "delete": "Delete incident",
+    "resolve": "Resolve",
+    "archive": "Archive",
+    "assignTo": "Assign to",
+    "reportedBy": "Reported by",
+    "createdAt": "Created",
+    "updatedAt": "Updated",
+    "resolvedAt": "Resolved",
+    "noIncidents": "No incidents found",
+    "noIncidentsDesc": "Everything is running smoothly.",
+    "fields": {
+      "title": "Title",
+      "titlePlaceholder": "Brief description of the issue",
+      "description": "Description",
+      "descriptionPlaceholder": "What happened? Include location and any relevant details.",
+      "category": "Category",
+      "severity": "Severity",
+      "status": "Status",
+      "photo": "Photo",
+      "photoHint": "Upload or take a photo of the incident"
+    },
+    "severity": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "critical": "Critical"
+    },
+    "status": {
+      "open": "Open",
+      "in_progress": "In progress",
+      "resolved": "Resolved",
+      "archived": "Archived"
+    },
+    "category": {
+      "equipment": "Equipment",
+      "safety": "Safety",
+      "hygiene": "Hygiene",
+      "service": "Service",
+      "supply": "Supply",
+      "facility": "Facility",
+      "other": "Other"
+    }
+  },
+  "team": {
+    "title": "Team",
+    "invite": "Invite member",
+    "members": "Members",
+    "roles": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "member": "Member"
+    },
+    "noMembers": "No team members yet"
+  },
+  "org": {
+    "setup": "Set up your organization",
+    "name": "Organization name",
+    "namePlaceholder": "e.g. Taco House Downtown",
+    "creating": "Creating..."
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "loading": "Loading...",
+    "submitting": "Submitting...",
+    "required": "Required",
+    "optional": "Optional",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "or": "or"
+  },
+  "validation": {
+    "required": "This field is required",
+    "emailInvalid": "Enter a valid email address",
+    "passwordMin": "Password must be at least 8 characters",
+    "titleMin": "Title must be at least 3 characters",
+    "titleMax": "Title must be under 100 characters",
+    "descriptionMax": "Description must be under 1000 characters",
+    "orgNameMin": "Organization name must be at least 2 characters"
+  },
+  "toast": {
+    "incidentCreated": "Incident reported",
+    "incidentUpdated": "Incident updated",
+    "incidentResolved": "Incident resolved",
+    "incidentArchived": "Incident archived",
+    "orgCreated": "Organization created",
+    "memberInvited": "Invitation sent",
+    "error": "Something went wrong",
+    "signInSuccess": "Signed in successfully",
+    "signUpSuccess": "Account created",
+    "signOutSuccess": "Signed out"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "unauthorized": "You don't have permission to do that.",
+    "notFound": "Not found.",
+    "networkError": "Network error. Check your connection."
+  }
+}

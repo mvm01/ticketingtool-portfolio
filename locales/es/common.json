@@ -1,0 +1,155 @@
+{
+  "app": {
+    "name": "RestaurantOps",
+    "tagline": "Gestión de incidentes operativos para restaurantes"
+  },
+  "nav": {
+    "dashboard": "Panel",
+    "incidents": "Incidentes",
+    "team": "Equipo",
+    "settings": "Configuración",
+    "signOut": "Cerrar sesión"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesión",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "fullName": "Nombre completo",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes una cuenta?",
+    "hasAccount": "¿Ya tienes una cuenta?",
+    "signingIn": "Iniciando sesión...",
+    "signingUp": "Creando cuenta...",
+    "welcomeBack": "Bienvenido de vuelta",
+    "createAccount": "Crea tu cuenta",
+    "emailPlaceholder": "tu@restaurante.com",
+    "passwordPlaceholder": "••••••••",
+    "namePlaceholder": "Tu nombre"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "greeting": "Buenos días",
+    "criticalIncidents": "Incidentes críticos",
+    "recentIncidents": "Incidentes recientes",
+    "resolutionQueue": "Cola de resolución",
+    "openIncidents": "Abiertos",
+    "inProgress": "En progreso",
+    "resolved": "Resueltos",
+    "totalToday": "Total hoy",
+    "noIncidents": "Sin incidentes que mostrar",
+    "allClear": "Todo en orden — sin incidentes activos"
+  },
+  "incidents": {
+    "title": "Incidentes",
+    "new": "Nuevo incidente",
+    "report": "Reportar incidente",
+    "edit": "Editar incidente",
+    "delete": "Eliminar incidente",
+    "resolve": "Resolver",
+    "archive": "Archivar",
+    "assignTo": "Asignar a",
+    "reportedBy": "Reportado por",
+    "createdAt": "Creado",
+    "updatedAt": "Actualizado",
+    "resolvedAt": "Resuelto",
+    "noIncidents": "Sin incidentes",
+    "noIncidentsDesc": "Todo funciona con normalidad.",
+    "fields": {
+      "title": "Título",
+      "titlePlaceholder": "Breve descripción del problema",
+      "description": "Descripción",
+      "descriptionPlaceholder": "¿Qué ocurrió? Incluye la ubicación y detalles relevantes.",
+      "category": "Categoría",
+      "severity": "Severidad",
+      "status": "Estado",
+      "photo": "Foto",
+      "photoHint": "Sube o toma una foto del incidente"
+    },
+    "severity": {
+      "low": "Bajo",
+      "medium": "Medio",
+      "high": "Alto",
+      "critical": "Crítico"
+    },
+    "status": {
+      "open": "Abierto",
+      "in_progress": "En progreso",
+      "resolved": "Resuelto",
+      "archived": "Archivado"
+    },
+    "category": {
+      "equipment": "Equipamiento",
+      "safety": "Seguridad",
+      "hygiene": "Higiene",
+      "service": "Servicio",
+      "supply": "Suministros",
+      "facility": "Instalaciones",
+      "other": "Otro"
+    }
+  },
+  "team": {
+    "title": "Equipo",
+    "invite": "Invitar miembro",
+    "members": "Miembros",
+    "roles": {
+      "owner": "Propietario",
+      "admin": "Administrador",
+      "member": "Miembro"
+    },
+    "noMembers": "Aún no hay miembros en el equipo"
+  },
+  "org": {
+    "setup": "Configura tu organización",
+    "name": "Nombre de la organización",
+    "namePlaceholder": "ej. Taquería Centro",
+    "creating": "Creando..."
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Atrás",
+    "loading": "Cargando...",
+    "submitting": "Enviando...",
+    "required": "Requerido",
+    "optional": "Opcional",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "all": "Todos",
+    "none": "Ninguno",
+    "yes": "Sí",
+    "no": "No",
+    "or": "o"
+  },
+  "validation": {
+    "required": "Este campo es requerido",
+    "emailInvalid": "Ingresa un correo electrónico válido",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+    "titleMin": "El título debe tener al menos 3 caracteres",
+    "titleMax": "El título debe tener menos de 100 caracteres",
+    "descriptionMax": "La descripción debe tener menos de 1000 caracteres",
+    "orgNameMin": "El nombre debe tener al menos 2 caracteres"
+  },
+  "toast": {
+    "incidentCreated": "Incidente reportado",
+    "incidentUpdated": "Incidente actualizado",
+    "incidentResolved": "Incidente resuelto",
+    "incidentArchived": "Incidente archivado",
+    "orgCreated": "Organización creada",
+    "memberInvited": "Invitación enviada",
+    "error": "Algo salió mal",
+    "signInSuccess": "Sesión iniciada",
+    "signUpSuccess": "Cuenta creada",
+    "signOutSuccess": "Sesión cerrada"
+  },
+  "errors": {
+    "generic": "Algo salió mal. Por favor intenta de nuevo.",
+    "unauthorized": "No tienes permiso para hacer eso.",
+    "notFound": "No encontrado.",
+    "networkError": "Error de red. Verifica tu conexión."
+  }
+}
